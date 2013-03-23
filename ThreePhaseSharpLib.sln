@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePhaseSharpLib", "SourceCode\ThreePhaseSharpLib.csproj", "{60C4A1A3-9ADA-4401-B8B8-1742F28E0083}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCUModel", "Demos\CCU.Model\SourceCode\CCUModel.csproj", "{AF673B55-EB91-4356-9344-417D5408A880}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs36
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Demos\\CCU.Model\\SourceCode\\CCUModel.csproj
+		SccProjectName1 = Demos/CCU.Model/SourceCode
+		SccLocalPath1 = Demos\\CCU.Model\\SourceCode
+		SccProjectUniqueName2 = SourceCode\\ThreePhaseSharpLib.csproj
+		SccProjectName2 = SourceCode
+		SccLocalPath2 = SourceCode
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60C4A1A3-9ADA-4401-B8B8-1742F28E0083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60C4A1A3-9ADA-4401-B8B8-1742F28E0083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60C4A1A3-9ADA-4401-B8B8-1742F28E0083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60C4A1A3-9ADA-4401-B8B8-1742F28E0083}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF673B55-EB91-4356-9344-417D5408A880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF673B55-EB91-4356-9344-417D5408A880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF673B55-EB91-4356-9344-417D5408A880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF673B55-EB91-4356-9344-417D5408A880}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
