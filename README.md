@@ -1,10 +1,9 @@
-# tfs36
-*This is a discrete-event simulation (DES) library that uses the three phase technique as described by the works of K D Tocher and Mike Pidd. *
+A Discrete-Event Simulation Library written in C# using Three-Phase Technique
 
-Please look at the *Downloads* page for a version of this library.
+This is a discrete-event simulation (DES) library that uses the three phase technique as described by the works of K D Tocher and Mike Pidd.
 
-A [Critical Care Unit Model|Demonstration of library with a Critical Care Unit model] is included as demonstration of library features.
+A demo of library with a Critical Care Unit model is included as demonstration of library features.
 
-Look also at the [Documentation] on how to use it.
+Look also at the Documentation on how to use it.
 
 Feel free to write me at axcosta@gmail.com for any inquiries.
