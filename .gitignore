@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SourceCode/bin/Debug
+/SourceCode/obj/Debug
+/Demos/CCU.Model/SourceCode/bin/Debug
+/Demos/CCU.Model/SourceCode/obj/Debug
+/.vs/ThreePhaseSharpLib/v14
