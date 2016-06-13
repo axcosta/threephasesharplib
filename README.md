@@ -4,6 +4,6 @@ This is a discrete-event simulation (DES) library that uses the three phase tech
 
 A demo of library with a Critical Care Unit model is included as demonstration of library features.
 
-Look also at the Documentation on how to use it.
+Look also at the Wiki on how to use it.
 
 Feel free to write me at axcosta@gmail.com for any inquiries.
