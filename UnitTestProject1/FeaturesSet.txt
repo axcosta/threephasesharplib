@@ -1,0 +1,12 @@
+﻿Features Set:
+
+Set simulation parameters
+Retrieve simulation variables
+Add entity to simulation collection
+Add resource to simulation collection
+Run a simulation model
+Pause a simulation model
+Reset a simulation model
+Use step mode
+
+

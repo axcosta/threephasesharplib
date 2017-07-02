@@ -26,12 +26,12 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 		public static EntityBase emergencyArrivalMachine = new PatientGroup("Emergency Arrival Machine");
 		public static EntityBase electiveArrivalMachine = new PatientGroup("Elective Arrival Machine");
 		public static ResourceBase beds = new CareUnit("CCU Beds");
-		public static BEvent emergencyArrive = new BEvent (Model.EmergencyPatientArrive);
-		public static BEvent electiveArrive = new BEvent (Model.ElectivePatientArrive);
-		public static BEvent emergencyEndOccupyBed = new BEvent (Model.EmergencyEndOccupyBed);
-		public static BEvent electiveEndOccupyBed = new BEvent (Model.ElectiveEndOccupyBed);
-		public static CActivity emergencyBeginOccupyBed = new CActivity (Model.EmergencyBeginOccupyBed);
-		public static CActivity electiveBeginOccupyBed = new CActivity (Model.ElectiveBeginOccupyBed);
+		public static BEvent emergencyArrive = new BEvent (EmergencyPatientArrive);
+		public static BEvent electiveArrive = new BEvent (ElectivePatientArrive);
+		public static BEvent emergencyEndOccupyBed = new BEvent (EmergencyEndOccupyBed);
+		public static BEvent electiveEndOccupyBed = new BEvent (ElectiveEndOccupyBed);
+		public static CActivity emergencyBeginOccupyBed = new CActivity (EmergencyBeginOccupyBed);
+		public static CActivity electiveBeginOccupyBed = new CActivity (ElectiveBeginOccupyBed);
 		public static EntityBase emergencyPatient = new Patient();
 
 		private static uint totalEmergencyArrivals;
@@ -298,32 +298,33 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 		static void Main(string[] args)
 		{
 			Model theModel = new Model();
-			//asigning OnStartRun event/handler from simulation to a method in the model class
-			Model.theSimulation.OnStartSimulation += 
-				new Simulation.StartSimulationHandler (Model.SimulationStart);
-			//asigning OnStartRun event/handler from simulation to a method in the model class
-			Model.theSimulation.OnStartRun += new Simulation.StartRunHandler (Model.RunStart);
-			//asigning OnFinishRun event/handler from simulation to a method in the model class
-			Model.theSimulation.OnFinishRun += new Simulation.FinishRunHandler (Model.RunFinished);
-			//asigning OnFinishSimulation event/handler from simulation to a method in the model class
-			Model.theSimulation.OnFinishSimulation += 
-				new Simulation.FinishSimulationHandler (Model.SimulationFinish);
-			//asigning OnCompletionThreePhases event/handler from simulation to a method in the model class
-			Model.theSimulation.OnCompleteThreePhases += 
-				new Simulation.CompleteThreePhasesHandler (Model.CompletionThreePhases);
-			
 
-			Model.theSimulation.Log = false;
+            //assigning OnStartRun event/handler from simulation to a method in the model class
+            theSimulation.OnStartSimulation += 
+				new Simulation.StartSimulationHandler (SimulationStart);
+            //assigning OnStartRun event/handler from simulation to a method in the model class
+            theSimulation.OnStartRun += new Simulation.StartRunHandler (RunStart);
+            //assigning OnFinishRun event/handler from simulation to a method in the model class
+            theSimulation.OnFinishRun += new Simulation.FinishRunHandler (RunFinished);
+			//assigning OnFinishSimulation event/handler from simulation to a method in the model class
+			theSimulation.OnFinishSimulation += 
+				new Simulation.FinishSimulationHandler (SimulationFinish);
+			//assigning OnCompletionThreePhases event/handler from simulation to a method in the model class
+			theSimulation.OnCompleteThreePhases += 
+				new Simulation.CompleteThreePhasesHandler (CompletionThreePhases);
+
             // turns off the simulation log
-			Model.theSimulation.AddEntity (Model.emergencyArrivalMachine);
-			Model.theSimulation.AddEntity (Model.electiveArrivalMachine);
-			Model.theSimulation.AddResource (Model.beds);
-			Model.theSimulation.AddBEvent (Model.emergencyArrive);
-			Model.theSimulation.AddBEvent (Model.electiveArrive);
-			Model.theSimulation.AddBEvent (Model.emergencyEndOccupyBed);
-			Model.theSimulation.AddBEvent (Model.electiveEndOccupyBed);
-			Model.theSimulation.AddCActivity (Model.emergencyBeginOccupyBed);
-			Model.theSimulation.AddCActivity (Model.electiveBeginOccupyBed);
+            theSimulation.Log = false;
+            
+			theSimulation.AddEntity (emergencyArrivalMachine);
+			theSimulation.AddEntity (electiveArrivalMachine);
+			theSimulation.AddResource (beds);
+			theSimulation.AddBEvent (emergencyArrive);
+			theSimulation.AddBEvent (electiveArrive);
+			theSimulation.AddBEvent (emergencyEndOccupyBed);
+			theSimulation.AddBEvent (electiveEndOccupyBed);
+			theSimulation.AddCActivity (emergencyBeginOccupyBed);
+			theSimulation.AddCActivity (electiveBeginOccupyBed);
 
 			theModel.SettingSimulationParameters();
 			theModel.SettingEmergencyPatientGroup();
@@ -366,10 +367,10 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 						Console.WriteLine ("Simulation Results");
 						Console.WriteLine ("=======================================================");
 						Console.WriteLine();
-						Console.WriteLine ("Run Duration: {0} hours (365 days)", Model.theSimulation.Duration);
-						Console.WriteLine ("Number of Runs: {0}", Model.theSimulation.NumberOfRuns);
+						Console.WriteLine ("Run Duration: {0} hours (365 days)", theSimulation.Duration);
+						Console.WriteLine ("Number of Runs: {0}", theSimulation.NumberOfRuns);
 						Console.WriteLine();
-						Model.theSimulation.Run();
+						theSimulation.Run();
 					}
 					catch (Exception ex)
 					{
