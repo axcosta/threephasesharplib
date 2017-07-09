@@ -21,7 +21,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 	{
 		// constant(s)
 		// field(s)
-		private System.Random randomNumberGenerator = new System.Random();
+		private Random randomNumberGenerator = new Random();
 		private uint populationByYear;
 		private float losLognormalMean;
 		private float losLognormalStandardDeviation;
@@ -34,7 +34,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 		// constructor(s)
 		public PatientGroup(string name)
 		{
-			this.Name = name;
+            Name = name;
 		}
 		//method(s)
 		/// <summary>
@@ -46,7 +46,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			uint patientLOSInHours;
 			do
 			{
-				patientLOSInDays = (uint)(this.LogNormalDev (losLognormalMean, losLognormalStandardDeviation));
+				patientLOSInDays = (uint)(LogNormalDev(losLognormalMean, losLognormalStandardDeviation));
 			} while ((patientLOSInDays < losMinimum) || (patientLOSInDays > losMaximum));
 			patientLOSInHours = patientLOSInDays * 24;
 			return (patientLOSInHours);

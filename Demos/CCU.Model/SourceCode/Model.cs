@@ -11,6 +11,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using ThreePhaseSharpLib;
 
 namespace ThreePhaseSharpLib.Demos.CCUModel
@@ -40,12 +41,18 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 		private static uint totalElectiveDeferrals;
 		private static ulong totalBedsUtilisation;
 
-		// event(s)
-		// constructor(s)
-		// method(s)
-		
-		//method that is invoked whenever the OnStartSimulation event occur
-		public static void SimulationStart(object theSimulationObject, Simulation.SimulationInfoEventArgs si)
+        private static uint NumberOfRuns;
+        private static uint RunDuration;
+
+        // Initialize the trace source.
+        private static readonly TraceSource trace = new TraceSource("CCUModelLog");
+
+        // event(s)
+        // constructor(s)
+        // method(s)        
+
+        //method that is invoked whenever the OnStartSimulation event occur
+        public static void SimulationStart(object theSimulationObject, Simulation.SimulationInfoEventArgs si)
 		{
 			totalEmergencyArrivals = 0;
 			totalElectiveArrivals = 0;
@@ -88,13 +95,13 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			float bedOccupancyRate;
 			//results for run
 			bedOccupancyRate = icuCareUnit.Utilisation;
-			bedOccupancyRate = bedOccupancyRate / (theSimulation.Duration * icuCareUnit.InitialValue);
+			bedOccupancyRate = bedOccupancyRate / (RunDuration * icuCareUnit.InitialValue);
 			if (bedOccupancyRate > 1)
 			{
 				bedOccupancyRate = 1;
 			}
 			Console.WriteLine ("-------------------------------------------------------");
-			Console.WriteLine ("Results for Run {0} of {1}", si.currentRun, theSimulation.NumberOfRuns);
+			Console.WriteLine ("Results for Run {0} of {1}", si.currentRun, NumberOfRuns);
 			Console.WriteLine ("-------------------------------------------------------");
 			Console.WriteLine ("Number of Emergency Arrivals: \t\t{0}", emergencyPatientGroup.NumberOfArrivals);
 			Console.WriteLine ("Number of Elective Arrivals: \t\t{0}", electivePatientGroup.NumberOfArrivals);
@@ -104,7 +111,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 				electivePatientGroup.NumberOfPatientsDeferred);
 			Console.WriteLine ("Utilisation (of Beds): \t\t\t{0} (hours)", icuCareUnit.Utilisation);
 			Console.WriteLine ("Availability (of Beds): \t\t{0} (hours)", 
-				(theSimulation.Duration * icuCareUnit.InitialValue));
+				(RunDuration * icuCareUnit.InitialValue));
 
 			Console.WriteLine ("Bed Occupancy Rate: \t\t\t{0:P2}", bedOccupancyRate);
 
@@ -123,24 +130,23 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			float bedOccupancyRate;
 			//results for run
 			bedOccupancyRate = totalBedsUtilisation;
-			bedOccupancyRate = bedOccupancyRate / (theSimulation.Duration * icuCareUnit.InitialValue * 
-				theSimulation.NumberOfRuns);
+			bedOccupancyRate = bedOccupancyRate / (RunDuration * icuCareUnit.InitialValue * NumberOfRuns);
 			if (bedOccupancyRate > 1)
 			{
 				bedOccupancyRate = 1;
 			}
 			Console.WriteLine ();
 			Console.WriteLine ("=======================================================");
-			Console.WriteLine ("Summary Results (average) for {0} run(s)", theSimulation.NumberOfRuns);
+			Console.WriteLine ("Summary Results (average) for {0} run(s)", NumberOfRuns);
 			Console.WriteLine ("=======================================================");
 			Console.WriteLine ("Emergency Arrivals: \t\t\t{0}", 
-				totalEmergencyArrivals / theSimulation.NumberOfRuns);
+				totalEmergencyArrivals / NumberOfRuns);
 			Console.WriteLine ("Elective Arrivals: \t\t\t{0}", 
-				totalElectiveArrivals / theSimulation.NumberOfRuns);
+				totalElectiveArrivals / NumberOfRuns);
 			Console.WriteLine ("Emergency Transfers: \t\t\t{0}", 
-				totalEmergencyTransfers / theSimulation.NumberOfRuns);
+				totalEmergencyTransfers / NumberOfRuns);
 			Console.WriteLine ("Elective Deferrals: \t\t\t{0}", 
-				totalElectiveDeferrals / theSimulation.NumberOfRuns);
+				totalElectiveDeferrals / NumberOfRuns);
 			Console.WriteLine ("Bed Occupancy Rate: \t\t\t{0:P2}", bedOccupancyRate);
 			Console.WriteLine ("=======================================================");
 			Console.WriteLine ("=======================================================");
@@ -162,8 +168,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			// add arrival to entity queue
 			emergencyPatientGroup.NumberOfPatientsInQueue += 1; 
 			// next arrival will occur in patient group inter-arrival time
-			theSimulation.Schedule (ref emergencyArrivalMachine, emergencyArrive, 
-				emergencyPatientGroup.NextArrival()); 
+			theSimulation.Schedule (ref emergencyArrivalMachine, emergencyArrive, emergencyPatientGroup.NextArrival()); 
 		}
 		public static void ElectivePatientArrive() 
 		{
@@ -192,7 +197,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 					//decrement the number of patients in queue
 					emergencyPatientGroup.NumberOfPatientsInQueue -= 1;
 					//create a new Patient entity
-					EntityBase newPatient = new Patient();
+					EntityBase newPatient = new Patient("Emergency Patient");
 					//schedule a B Event (EndOccupyBed) to occur within patient group LOS (in days)
 					uint patientLOS = emergencyPatientGroup.PatientLOS();
 					icuCareUnit.Utilisation += patientLOS;
@@ -226,7 +231,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 				//decrement the number of patients in queue
 				electivePatientGroup.NumberOfPatientsInQueue -= 1;
 				//create a new Patient entity
-				EntityBase newPatient = new Patient();
+				EntityBase newPatient = new Patient("Elective Patient");
 				//schedule a B Event (EndOccupyBed) to occur within patient group LOS (in days)
 				uint patientLOS = electivePatientGroup.PatientLOS();
 				icuCareUnit.Utilisation += patientLOS;
@@ -258,10 +263,11 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 		}
 		public void SettingSimulationParameters()
 		{
-			theSimulation.Duration = 365 * 24; // 365 days times 24 hours = 8760 hours
-			//theSimulation.Duration = 5 * 24; // 365 days times 24 hours = 8760 hours
-			theSimulation.NumberOfRuns = 10;
-		}
+            RunDuration = 365 * 24; // 365 days times 24 hours = 8760 hours	
+            NumberOfRuns = 10;
+            theSimulation.Configurator.Duration = RunDuration;
+            theSimulation.Configurator.NumberOfRuns = NumberOfRuns;
+        }
 		public void SettingEmergencyPatientGroup()
 		{
 			PatientGroup emergencyPatientGroup;
@@ -297,6 +303,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 		[STAThread]
 		static void Main(string[] args)
 		{
+           
 			Model theModel = new Model();
 
             //assigning OnStartRun event/handler from simulation to a method in the model class
@@ -311,10 +318,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 				new Simulation.FinishSimulationHandler (SimulationFinish);
 			//assigning OnCompletionThreePhases event/handler from simulation to a method in the model class
 			theSimulation.OnCompleteThreePhases += 
-				new Simulation.CompleteThreePhasesHandler (CompletionThreePhases);
-
-            // turns off the simulation log
-            theSimulation.Log = false;
+				new Simulation.CompleteThreePhasesHandler (CompletionThreePhases);            
             
 			theSimulation.AddEntity (emergencyArrivalMachine);
 			theSimulation.AddEntity (electiveArrivalMachine);
@@ -333,10 +337,10 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 
 			Console.WriteLine("******** Critical Care Unit Model version 1.0 *********");
 			Console.WriteLine("*                                                     *");
-			Console.WriteLine("*       (using ThreePhaseSharpLib version 1.0)        *");
+			Console.WriteLine("*       (using ThreePhaseSharpLib version 2.0)        *");
 			Console.WriteLine("*                                                     *");
 			Console.WriteLine("*                                  by Andre X. Costa  *");
-			Console.WriteLine("*                                     September 2003  *");
+			Console.WriteLine("*                                          July 2017  *");
 			Console.WriteLine("*******************************************************");
 			Console.WriteLine();
 			string reply = "";
@@ -367,8 +371,8 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 						Console.WriteLine ("Simulation Results");
 						Console.WriteLine ("=======================================================");
 						Console.WriteLine();
-						Console.WriteLine ("Run Duration: {0} hours (365 days)", theSimulation.Duration);
-						Console.WriteLine ("Number of Runs: {0}", theSimulation.NumberOfRuns);
+						Console.WriteLine ("Run Duration: {0} hours (365 days)", RunDuration);
+						Console.WriteLine ("Number of Runs: {0}", NumberOfRuns);
 						Console.WriteLine();
 						theSimulation.Run();
 					}

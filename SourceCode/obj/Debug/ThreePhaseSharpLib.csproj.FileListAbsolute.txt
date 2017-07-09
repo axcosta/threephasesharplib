@@ -1,0 +1,8 @@
+C:\Users\axcos\Documents\GitHub\threephasesharplib\SourceCode\bin\Debug\ThreePhaseSharpLib.dll
+C:\Users\axcos\Documents\GitHub\threephasesharplib\SourceCode\bin\Debug\ThreePhaseSharpLib.pdb
+C:\Users\axcos\Documents\GitHub\threephasesharplib\SourceCode\obj\Debug\ThreePhaseSharpLib.dll
+C:\Users\axcos\Documents\GitHub\threephasesharplib\SourceCode\obj\Debug\ThreePhaseSharpLib.pdb
+C:\Users\axcos\Documents\GitHub\threephasesharplib\SourceCode\obj\Debug\ThreePhaseSharpLib.Strings.resources
+C:\Users\axcos\Documents\GitHub\threephasesharplib\SourceCode\obj\Debug\ThreePhaseSharpLib.csproj.GenerateResource.Cache
+C:\Users\axcos\Documents\GitHub\threephasesharplib\SourceCode\obj\Debug\ThreePhaseSharpLib.csprojResolveAssemblyReference.cache
+C:\Users\axcos\Documents\GitHub\threephasesharplib\SourceCode\bin\Debug\ThreePhaseSharpLib.dll.config

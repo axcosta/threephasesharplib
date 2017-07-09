@@ -1,0 +1,7 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/Demos/CCU.Model/SourceCode/bin/Debug
+/Demos/CCU.Model/SourceCode/obj/Debug
+/TestResults

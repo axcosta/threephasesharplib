@@ -11,5 +11,9 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 		{
 			
 		}
-	}
+        public Patient (string name)
+        {
+            Name = name;
+        }
+    }
 }

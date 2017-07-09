@@ -18,12 +18,12 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CCU Model")]
+[assembly: AssemblyDescription("Critical Care Unit Model which uses ThreePhaseSharpLib")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("(C) 2013-17")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
