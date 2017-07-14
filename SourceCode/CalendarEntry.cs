@@ -10,43 +10,44 @@
 //
 #endregion
 
-using System;
+using static ThreePhaseSharpLib.SimulationEventAndActivityManager;
 
 namespace ThreePhaseSharpLib
 {
-	/// <summary>
-	/// An entry in the Calendar class
-	/// </summary>
-	internal class CalendarEntry
+    /// <summary>
+    /// An entry in the Calendar class
+    /// </summary>
+    internal class CalendarEntry
 	{
 		// constant(s)
 
 		// field(s)
 		private EntityBase entity;
 		private uint timeCell = 0;
-		private BEvent nextB;
+		private Event nextB;                
 
-		// event(s)
+        // event(s)
 
-		// constructor(s)
-		internal CalendarEntry()
+        // constructor(s)
+        internal CalendarEntry()
 		{
 			
 		}
-		internal CalendarEntry (ref EntityBase newEntity, BEvent newNextB, uint newNextTime)
+		internal CalendarEntry (ref EntityBase newEntity, Event newNextB, uint newNextTime)
 		{
 			entity = newEntity;
 			timeCell = newNextTime;
 			nextB = newNextB;
-		}
-		// method(s)
+		}        
 
-		// property(ies)	
+        // method(s)
 
-		/// <summary>
-		/// Entity (reference to an Entity object)
-		/// </summary>
-		internal EntityBase Entity
+        // property(ies)	
+
+        /// <summary>
+        /// Entity (reference to an Entity object)
+        /// </summary>
+        internal EntityBase Entity
 		{
 			get
 			{
@@ -74,7 +75,7 @@ namespace ThreePhaseSharpLib
 		/// <summary>
 		/// sets/returns a B Event to be executed
 		/// </summary>
-		internal BEvent NextB
+		internal Event NextB
 		{
 			get
 			{

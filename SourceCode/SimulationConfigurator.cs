@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using static ThreePhaseSharpLib.SimulationController;
 
 namespace ThreePhaseSharpLib
 {
@@ -19,11 +20,12 @@ namespace ThreePhaseSharpLib
         private static readonly TraceSource trace = new TraceSource("ThreePhaseSharpLib.SimulationConfigurator");
 
         // The parent simulation
-        private readonly Simulation simulation;
+        private SimulationController simulationController;
+        
 
-        public SimulationConfigurator(Simulation simulation)
+        public SimulationConfigurator (SimulationController simulationController)
         {
-            this.simulation = simulation;            
+            this.simulationController = simulationController;
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace ThreePhaseSharpLib
             }
             set 
             {
-                if (simulation.CurrentInformation.CurrentState == Simulation.State.Idle)
+                if (simulationController.CurrentInformation.CurrentState == State.Idle)
                 {
                     if ((value >= 0) && (value <= UpperBound32BitUnsignedInteger))
                     {
@@ -125,7 +127,7 @@ namespace ThreePhaseSharpLib
             }
             set
             {
-                if (simulation.CurrentInformation.CurrentState == Simulation.State.Idle)
+                if (simulationController.CurrentInformation.CurrentState == State.Idle)
                 {
                     if ((value >= 1) && (value <= UpperBound32BitUnsignedInteger))
                     {
@@ -160,7 +162,7 @@ namespace ThreePhaseSharpLib
             }
             set
             {
-                if (simulation.CurrentInformation.CurrentState == Simulation.State.Idle)
+                if (simulationController.CurrentInformation.CurrentState == State.Idle)
                 {
                     if ((value >= 0) && (value <= UpperBound32BitUnsignedInteger))
                     {

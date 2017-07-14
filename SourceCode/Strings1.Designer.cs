@@ -160,6 +160,15 @@ namespace ThreePhaseSharpLib {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Ending Run {0} of {1}..
+        /// </summary>
+        internal static string SIMULATION_END_RUN {
+            get {
+                return ResourceManager.GetString("SIMULATION_END_RUN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a {0} could not be added because current State IS NOT Idle..
         /// </summary>
         internal static string SIMULATION_EXCEPTION_ADD_COMPONENT {
@@ -336,6 +345,15 @@ namespace ThreePhaseSharpLib {
         internal static string SIMULATION_SCHEDULE_B_EVENT {
             get {
                 return ResourceManager.GetString("SIMULATION_SCHEDULE_B_EVENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Starting Run {0} of {1}..
+        /// </summary>
+        internal static string SIMULATION_START_RUN {
+            get {
+                return ResourceManager.GetString("SIMULATION_START_RUN", resourceCulture);
             }
         }
         

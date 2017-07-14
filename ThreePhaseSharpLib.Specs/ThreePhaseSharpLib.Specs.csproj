@@ -7,7 +7,7 @@
     <ProjectGuid>{902056FE-A0BB-4D34-AC8E-3BF1944A313C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ThreePhaseSharpLibTest</RootNamespace>
+    <RootNamespace>ThreePhaseSharpLib</RootNamespace>
     <AssemblyName>ThreePhaseSharpLibTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

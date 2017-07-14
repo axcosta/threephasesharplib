@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePhaseSharpLib", "SourceCode\ThreePhaseSharpLib.csproj", "{60C4A1A3-9ADA-4401-B8B8-1742F28E0083}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCUModel", "Demos\CCU.Model\SourceCode\CCUModel.csproj", "{AF673B55-EB91-4356-9344-417D5408A880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePhaseSharpLib.Specs", "UnitTestProject1\ThreePhaseSharpLib.Specs.csproj", "{902056FE-A0BB-4D34-AC8E-3BF1944A313C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePhaseSharpLib.Specs", "ThreePhaseSharpLib.Specs\ThreePhaseSharpLib.Specs.csproj", "{902056FE-A0BB-4D34-AC8E-3BF1944A313C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

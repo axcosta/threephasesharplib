@@ -12,47 +12,48 @@
 
 using System;
 using System.Diagnostics;
-using ThreePhaseSharpLib;
+using static ThreePhaseSharpLib.SimulationController;
+using static ThreePhaseSharpLib.SimulationEventAndActivityManager;
 
 namespace ThreePhaseSharpLib.Demos.CCUModel
 {
-	/// <summary>
-	/// This is a demonstration model for the three-phase simulation library.
-	/// </summary>
-	class Model
+    /// <summary>
+    /// This is a demonstration model for the three-phase simulation library.
+    /// </summary>
+    public class Model
 	{
-		// constant(s)
-		// field(s)
-		public static Simulation theSimulation = new Simulation();
-		public static EntityBase emergencyArrivalMachine = new PatientGroup("Emergency Arrival Machine");
-		public static EntityBase electiveArrivalMachine = new PatientGroup("Elective Arrival Machine");
-		public static ResourceBase beds = new CareUnit("CCU Beds");
-		public static BEvent emergencyArrive = new BEvent (EmergencyPatientArrive);
-		public static BEvent electiveArrive = new BEvent (ElectivePatientArrive);
-		public static BEvent emergencyEndOccupyBed = new BEvent (EmergencyEndOccupyBed);
-		public static BEvent electiveEndOccupyBed = new BEvent (ElectiveEndOccupyBed);
-		public static CActivity emergencyBeginOccupyBed = new CActivity (EmergencyBeginOccupyBed);
-		public static CActivity electiveBeginOccupyBed = new CActivity (ElectiveBeginOccupyBed);
-		public static EntityBase emergencyPatient = new Patient();
+        // constant(s)
+        // field(s)     
+        public SimulationController theSimulation = new SimulationController();
+        public EntityBase emergencyArrivalMachine = new PatientGroup("Emergency Arrival Machine");
+		public EntityBase electiveArrivalMachine = new PatientGroup("Elective Arrival Machine");
+		public ResourceBase beds = new CareUnit("CCU Beds");
+		public Event emergencyArrive = new Event (EmergencyPatientArrive);
+		public Event electiveArrive = new Event (ElectivePatientArrive);
+		public Event emergencyEndOccupyBed = new Event (EmergencyEndOccupyBed);
+		public Event electiveEndOccupyBed = new Event (ElectiveEndOccupyBed);
+		public Activity emergencyBeginOccupyBed = new Activity (EmergencyBeginOccupyBed);
+		public Activity electiveBeginOccupyBed = new Activity (ElectiveBeginOccupyBed);
+		public EntityBase emergencyPatient = new Patient();
 
-		private static uint totalEmergencyArrivals;
-		private static uint totalElectiveArrivals;
-		private static uint totalEmergencyTransfers;
-		private static uint totalElectiveDeferrals;
-		private static ulong totalBedsUtilisation;
+		private uint totalEmergencyArrivals;
+		private uint totalElectiveArrivals;
+		private uint totalEmergencyTransfers;
+		private uint totalElectiveDeferrals;
+		private ulong totalBedsUtilisation;
 
-        private static uint NumberOfRuns;
-        private static uint RunDuration;
+        private uint NumberOfRuns;
+        private uint RunDuration;
 
         // Initialize the trace source.
-        private static readonly TraceSource trace = new TraceSource("CCUModelLog");
+        private static readonly TraceSource trace = new TraceSource("CCUModel");
 
         // event(s)
         // constructor(s)
         // method(s)        
 
         //method that is invoked whenever the OnStartSimulation event occur
-        public static void SimulationStart(object theSimulationObject, Simulation.SimulationInfoEventArgs si)
+        public void SimulationStart(object theSimulationObject, SimulationInfoEventArgs si)
 		{
 			totalEmergencyArrivals = 0;
 			totalElectiveArrivals = 0;
@@ -61,7 +62,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			totalBedsUtilisation = 0;
 		}
 		//method that is invoked whenever the OnStartRun event occur
-		public static void RunStart(object theSimulationObject, Simulation.SimulationInfoEventArgs si)
+		public void RunStart(object theSimulationObject, SimulationInfoEventArgs si)
 		{
 			//defining model temporary variables
 			CareUnit icuCareUnit;
@@ -71,8 +72,8 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			PatientGroup emergencyPatientGroup;
 			emergencyPatientGroup = (PatientGroup) emergencyArrivalMachine;
 			// reinitialising model variables
-			theSimulation.Schedule (ref emergencyArrivalMachine, emergencyArrive,  0);
-			theSimulation.Schedule (ref electiveArrivalMachine, electiveArrive,  0);
+			theSimulation.Technique.Schedule(ref emergencyArrivalMachine, emergencyArrive,  0);
+			theSimulation.Technique.Schedule(ref electiveArrivalMachine, electiveArrive,  0);
 			emergencyPatientGroup.NumberOfArrivals = 0;
 			emergencyPatientGroup.NumberOfPatientsDeferred = 0;
 			emergencyPatientGroup.NumberOfPatientsInQueue = 0;
@@ -83,7 +84,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			icuCareUnit.Utilisation = 0;
 		}
 		//method that is invoked whenever the OnFinishRun event occur
-		public static void RunFinished(object theSimulationObject, Simulation.SimulationInfoEventArgs si)
+		public void RunFinished(object theSimulationObject, SimulationInfoEventArgs si)
 		{
 			//defining model temporary variables
 			CareUnit icuCareUnit;
@@ -122,7 +123,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			totalBedsUtilisation += icuCareUnit.Utilisation;
 		}
 		//method that is invoked whenever the OnFinishSimulation event occur
-		public static void SimulationFinish(object theSimulationObject, Simulation.SimulationInfoEventArgs si)
+		public void SimulationFinish(object theSimulationObject, SimulationInfoEventArgs si)
 		{
 			//defining model temporary variables
 			CareUnit icuCareUnit;
@@ -154,12 +155,11 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			Console.WriteLine ();
 		}
 		//method that is invoked whenever the CompletionThreePhases event occur
-		public static void CompletionThreePhases(object theSimulationObject, 
-			Simulation.SimulationInfoEventArgs si)
+		public void CompletionThreePhases(object theSimulationObject, SimulationInfoEventArgs si)
 		{
 			//Console.WriteLine ("ST {0}", si.time);
 		}
-		public static void EmergencyPatientArrive() 
+		public void EmergencyPatientArrive() 
 		{
 			PatientGroup emergencyPatientGroup;
 			emergencyPatientGroup = (PatientGroup) emergencyArrivalMachine;
@@ -168,9 +168,9 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			// add arrival to entity queue
 			emergencyPatientGroup.NumberOfPatientsInQueue += 1; 
 			// next arrival will occur in patient group inter-arrival time
-			theSimulation.Schedule (ref emergencyArrivalMachine, emergencyArrive, emergencyPatientGroup.NextArrival()); 
+			theSimulation.Technique.Schedule (ref emergencyArrivalMachine, emergencyArrive, emergencyPatientGroup.NextArrival()); 
 		}
-		public static void ElectivePatientArrive() 
+		public void ElectivePatientArrive() 
 		{
 			PatientGroup electivePatientGroup;
 			electivePatientGroup = (PatientGroup) electiveArrivalMachine;
@@ -179,9 +179,9 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			// add arrival to entity queue
 			electivePatientGroup.NumberOfPatientsInQueue += 1; 
 			// next arrival will occur in patient group inter-arrival time
-			theSimulation.Schedule (ref electiveArrivalMachine, electiveArrive, electivePatientGroup.NextArrival()); 
+			theSimulation.Technique.Schedule(ref electiveArrivalMachine, electiveArrive, electivePatientGroup.NextArrival()); 
 		}
-		public static bool EmergencyBeginOccupyBed()
+		public bool EmergencyBeginOccupyBed()
 		{
 			PatientGroup emergencyPatientGroup;
 			emergencyPatientGroup = (PatientGroup) emergencyArrivalMachine;
@@ -201,7 +201,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 					//schedule a B Event (EndOccupyBed) to occur within patient group LOS (in days)
 					uint patientLOS = emergencyPatientGroup.PatientLOS();
 					icuCareUnit.Utilisation += patientLOS;
-					theSimulation.Schedule (ref newPatient, emergencyEndOccupyBed, patientLOS);
+					theSimulation.Technique.Schedule(ref newPatient, emergencyEndOccupyBed, patientLOS);
 					//set flag to true (activity has started)
 					activityStarted = true;
 			}
@@ -214,7 +214,7 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			//return value of flag variable
 			return (activityStarted);
 		}
-		public static bool ElectiveBeginOccupyBed()
+		public bool ElectiveBeginOccupyBed()
 		{
 			PatientGroup electivePatientGroup;
 			electivePatientGroup = (PatientGroup) electiveArrivalMachine;
@@ -235,10 +235,10 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 				//schedule a B Event (EndOccupyBed) to occur within patient group LOS (in days)
 				uint patientLOS = electivePatientGroup.PatientLOS();
 				icuCareUnit.Utilisation += patientLOS;
-				theSimulation.Schedule (ref newPatient, electiveEndOccupyBed, patientLOS);
-				//theSimulation.Schedule (ref electivePatient, electiveEndOccupyBed, patientLOS);
-				//set flag to true (activity has started)
-				activityStarted = true;
+				theSimulation.Technique.Schedule(ref newPatient, electiveEndOccupyBed, patientLOS);                
+                //theSimulation.Schedule (ref electivePatient, electiveEndOccupyBed, patientLOS);
+                //set flag to true (activity has started)
+                activityStarted = true;
 			}
 			// if there are still elective patients in queue, they are deferred.
 			if (electivePatientGroup.NumberOfPatientsInQueue > 0)
@@ -249,13 +249,13 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 			//return value of flag variable
 			return (activityStarted);
 		}
-		public static void EmergencyEndOccupyBed() 
+		public void EmergencyEndOccupyBed() 
 		{
 			CareUnit icuCareUnit;
 			icuCareUnit = (CareUnit) beds;
 			icuCareUnit.Count += 1;
 		}
-		public static void ElectiveEndOccupyBed() 
+		public void ElectiveEndOccupyBed() 
 		{
 			CareUnit icuCareUnit;
 			icuCareUnit = (CareUnit) beds;
@@ -301,34 +301,31 @@ namespace ThreePhaseSharpLib.Demos.CCUModel
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main(string[] args)
+		void Main(string[] args)
 		{
            
 			Model theModel = new Model();
 
             //assigning OnStartRun event/handler from simulation to a method in the model class
-            theSimulation.OnStartSimulation += 
-				new Simulation.StartSimulationHandler (SimulationStart);
+            theSimulation.OnStartSimulation += new StartSimulationHandler(SimulationStart);
             //assigning OnStartRun event/handler from simulation to a method in the model class
-            theSimulation.OnStartRun += new Simulation.StartRunHandler (RunStart);
+            theSimulation.OnStartRun += new StartRunHandler(RunStart);
             //assigning OnFinishRun event/handler from simulation to a method in the model class
-            theSimulation.OnFinishRun += new Simulation.FinishRunHandler (RunFinished);
+            theSimulation.OnFinishRun += new FinishRunHandler(RunFinished);
 			//assigning OnFinishSimulation event/handler from simulation to a method in the model class
-			theSimulation.OnFinishSimulation += 
-				new Simulation.FinishSimulationHandler (SimulationFinish);
-			//assigning OnCompletionThreePhases event/handler from simulation to a method in the model class
-			theSimulation.OnCompleteThreePhases += 
-				new Simulation.CompleteThreePhasesHandler (CompletionThreePhases);            
+			theSimulation.OnFinishSimulation += new FinishSimulationHandler(SimulationFinish);
+			//assigning OnCompletionThreePhases event/handler from simulation to a method in the model class            
+			//theSimulationOnCompleteThreePhases += new CompleteThreePhasesHandler (CompletionThreePhases);            
             
-			theSimulation.AddEntity (emergencyArrivalMachine);
-			theSimulation.AddEntity (electiveArrivalMachine);
-			theSimulation.AddResource (beds);
-			theSimulation.AddBEvent (emergencyArrive);
-			theSimulation.AddBEvent (electiveArrive);
-			theSimulation.AddBEvent (emergencyEndOccupyBed);
-			theSimulation.AddBEvent (electiveEndOccupyBed);
-			theSimulation.AddCActivity (emergencyBeginOccupyBed);
-			theSimulation.AddCActivity (electiveBeginOccupyBed);
+			theSimulation.EntityAndResourceManager.AddEntity (emergencyArrivalMachine);
+			theSimulation.EntityAndResourceManager.AddEntity (electiveArrivalMachine);
+			theSimulation.EntityAndResourceManager.AddResource (beds);
+			theSimulation.EventAndActivityManager.AddEvent (emergencyArrive);
+			theSimulation.EventAndActivityManager.AddEvent(electiveArrive);
+			theSimulation.EventAndActivityManager.AddEvent(emergencyEndOccupyBed);
+			theSimulation.EventAndActivityManager.AddEvent(electiveEndOccupyBed);
+			theSimulation.EventAndActivityManager.AddActivity(emergencyBeginOccupyBed);
+			theSimulation.EventAndActivityManager.AddActivity(electiveBeginOccupyBed);
 
 			theModel.SettingSimulationParameters();
 			theModel.SettingEmergencyPatientGroup();

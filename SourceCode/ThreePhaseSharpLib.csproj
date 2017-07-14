@@ -73,6 +73,8 @@
     <Reference Include="System.configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SimulationEventAndActivityManager.cs" />
+    <Compile Include="SimulationController.cs" />
     <Compile Include="SimulationCurrentInformation.cs" />
     <Compile Include="SimulationConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -90,6 +92,9 @@
     <Compile Include="EntityBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ISimulationTechnique.cs" />
+    <Compile Include="SimulationEntityAndResourceManager.cs" />
+    <Compile Include="SimulationInfoEventArgs.cs" />
     <Compile Include="Strings1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -98,12 +103,10 @@
     <Compile Include="ResourceBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Simulation.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ThreePhaseInfiniteLoopException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ThreePhaseSimulation.cs" />
     <Compile Include="ValueOutOfRangeException.cs">
       <SubType>Code</SubType>
     </Compile>

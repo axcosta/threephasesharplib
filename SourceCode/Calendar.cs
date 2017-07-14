@@ -11,20 +11,25 @@
 #endregion
 
 using System;
+using System.Collections;
 
 namespace ThreePhaseSharpLib
 {
 	/// <summary>
 	/// This is the calendar of the three-phase simulation
 	/// </summary>
-	internal class Calendar : System.Collections.ArrayList
+	public class Calendar : ArrayList
 	{
-		// constant(s)
-		// field(s)
+        public Calendar(ICollection c) : base(c)
+        {
+        }
 
-		// event(s)
-		// constructor(s)
-		internal Calendar()
+        // constant(s)
+        // field(s)
+
+        // event(s)
+        // constructor(s)
+        internal Calendar()
 		{
 				
 		}
@@ -32,10 +37,5 @@ namespace ThreePhaseSharpLib
 		// method(s)
 
 		// property(ies)
-
-		
-
-
-
 	}
 }

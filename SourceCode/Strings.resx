@@ -150,6 +150,9 @@
   <data name="SIMULATION_C_PHASE_STARTED_C_ACTIVITY" xml:space="preserve">
     <value>ST {0} - TRIED {1}  ... STARTED!</value>
   </data>
+  <data name="SIMULATION_END_RUN" xml:space="preserve">
+    <value>Ending Run {0} of {1}.</value>
+  </data>
   <data name="SIMULATION_EXCEPTION_ADD_COMPONENT" xml:space="preserve">
     <value>{0} could not be added because current State IS NOT Idle.</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="SIMULATION_SCHEDULE_B_EVENT" xml:space="preserve">
     <value>ST {0} - SCHEDULING Entity [{1}] to execute {2}  @{3} ST.</value>
+  </data>
+  <data name="SIMULATION_START_RUN" xml:space="preserve">
+    <value>Starting Run {0} of {1}.</value>
   </data>
   <data name="SIMULATION_STEP_MODE_OFF" xml:space="preserve">
     <value>Step Mode is Off.</value>

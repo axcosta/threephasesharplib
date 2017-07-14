@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace ThreePhaseSharpLibTest
+namespace ThreePhaseSharpLib
 {
     using TechTalk.SpecFlow;
     

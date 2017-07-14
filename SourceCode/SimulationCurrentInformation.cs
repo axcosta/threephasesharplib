@@ -1,19 +1,21 @@
-﻿namespace ThreePhaseSharpLib
+﻿using static ThreePhaseSharpLib.SimulationController;
+
+namespace ThreePhaseSharpLib
 {
     public class SimulationCurrentInformation
     {
         private bool isWarmUpTime = false;
         private uint currentRun = 1;
         private uint time = 0;        
-        private Simulation.State currentState = Simulation.State.Idle;
+        private State currentState = State.Idle;
         private bool initialised = false;
         private bool hasSimulationStarted = false;
-        private bool hasRunStarted = false; 
-        private Simulation simulation;
+        private bool hasRunStarted = false;         
+        private SimulationController simulationController;       
 
-        public SimulationCurrentInformation(Simulation simulation)
+        public SimulationCurrentInformation(SimulationController simulationController)
         {
-            this.simulation = simulation;
+            this.simulationController = simulationController;
         }
 
         /// <summary>
@@ -27,7 +29,7 @@
         /// <summary>
         /// Simulation Current State (idle, running, paused or finished)
         /// </summary>
-        public Simulation.State CurrentState { get => currentState; set => currentState = value; }
+        public State CurrentState { get => currentState; set => currentState = value; }
         /// <summary>
         /// true if Simulation is in warm-up time
         /// </summary>
@@ -50,6 +52,14 @@
             Time = 0;
             CurrentRun = 1;
             Initialised = true;
+        }
+
+        public void Reset()
+        {
+            CurrentState = State.Idle;
+            Initialised = false;
+            Time = 0;
+            CurrentRun = 1;
         }
     }
 }
